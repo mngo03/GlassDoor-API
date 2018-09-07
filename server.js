@@ -16,4 +16,11 @@ mongoose.connect(db, err => {
     }
 })
 
+//Add your controllers here
+var companyController = require('./controllers/company/company_controller');
+
+//Add your controllers to the app
+app.use('/company', companyController);
+
+
 console.log("Listening to port: " + port);
