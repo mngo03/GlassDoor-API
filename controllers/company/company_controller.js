@@ -240,5 +240,62 @@ router.delete("/update/:id", function(req, res) {
       });
 })
 
+var company = require('../../models/company/company_companies');
+// Creates a new company
+router.post('/company', function (req, res) {
+    company.create({
+            name : req.body.name,
+            website : req.body.website,
+            hqCity : req.body.hqCity,
+            yearFounded : req.body.yearFounded,
+            type : req.body.type,
+            sector : req.body.sector,
+            industry : req.body.industry,
+            totalEmployees : req.body.totalEmployees,
+            annualRevenue : req.body.annualRevenue,
+            status : req.body.status,
+            affiliated_companies : req.body.affiliated_companies,
+            competitors : req.body.competitors,
+            stock_symbol : req.body.stock_symbol,
+            logo : req.body.logo,
+            description : req.body.description,
+            mission : req.body.mission,
+            company_ceos : req.body.company_ceos,
+            company_locations : req.body.company_locations,
+            company_benefits : req.body.company_benefits,
+            company_awards : req.body.company_awards,
+            company_photos : req.body.company_photos,
+            company_updates : req.body.company_updates
+        },
+        function (err, ceo) {
+            if (err) return res.status(500).send("There was a problem adding the ceo to the database.");
+            res.status(200).send(ceo);
+        });
+});
+// Returns all the companies in the database
+router.get('/company', function (req, res) {
+    company.find().populate('company_ceos company_locations company_benefits company_awards company_photos company_updates').exec( function (err, ceos) {
+        if (err) return res.status(500).send("There was a problem finding the ceos.");
+        res.status(200).send(ceos);
+    });
+});
+// Updates a update
+router.put('/company/:id', function (req, res) {
+    company.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+      if (err) {
+            res.status(500).send("There was a problem updating the ceo to the database.")
+      }
+      res.status(200).json(post);
+    });
+})
+// Deletes a photo
+router.delete("/company/:id", function(req, res) {
+    company.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+        if (err) {
+              res.status(500).send("There was a problem removing the ceo to the database.")
+        }
+        res.status(200).json(post);
+      });
+})
 
 module.exports = router;
