@@ -27,9 +27,9 @@ router.post('/job', function(req, res){
 });
 
 router.get('/job', function(req, res){
-    job.find().populate('jobs').exec(function(err, job){
+    job.find().populate('job').exec(function(err, job){
         if (err) return res.status(500).send('There was a problem finding the job');
-        res.status(200).send(jobs);
+        res.status(200).send(job);
     });
 });
 
